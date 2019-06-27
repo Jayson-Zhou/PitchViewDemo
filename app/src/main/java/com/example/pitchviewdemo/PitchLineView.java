@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat;
 
 public class PitchLineView extends View {
 
+    private final String TAG = "PitchLineView:";
+
     // 线高
     private int lineHeight = 25;
 
@@ -25,6 +27,7 @@ public class PitchLineView extends View {
 
     public PitchLineView(Context context) {
         super(context);
+        initData();
     }
 
     public PitchLineView(Context context, @Nullable AttributeSet attrs) {
@@ -59,10 +62,12 @@ public class PitchLineView extends View {
         int widthSpec, heightSpec;
         if (mData != null && mData.lineLength > 0) {
             widthSpec = MeasureSpec.makeMeasureSpec(mData.lineLength, MeasureSpec.EXACTLY);
-            heightSpec = MeasureSpec.makeMeasureSpec(lineHeight, MeasureSpec.EXACTLY);
+            // 高度的值取决于音高线的音高量化分度值
+            heightSpec = MeasureSpec.makeMeasureSpec(250, MeasureSpec.EXACTLY);
         } else {
             widthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
-            heightSpec = MeasureSpec.makeMeasureSpec(lineHeight, MeasureSpec.EXACTLY);
+            // 高度的值取决于音高线的音高量化分度值
+            heightSpec = MeasureSpec.makeMeasureSpec(250, MeasureSpec.EXACTLY);
         }
         super.onMeasure(widthSpec, heightSpec);
     }
@@ -72,7 +77,9 @@ public class PitchLineView extends View {
         super.onDraw(canvas);
         if (mData == null || !mData.needSing)
             return;
-        canvas.drawLine(0, mData.heightY, mData.lineLength, mData.heightY, paint);
+        // 加高度的一半是为了顶部的线不会出现只显示一半的情况
+        int h = lineHeight / 2;
+        canvas.drawLine(0, h + mData.heightY, mData.lineLength, h + mData.heightY, paint);
     }
 
     /**
