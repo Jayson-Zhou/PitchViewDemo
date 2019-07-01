@@ -52,6 +52,6 @@ public class ScrollAnimat {
         scrolledLength = 0;
         rvWidth = viewWidth;
         ViewCompat.postOnAnimation(mRv, scrollRunnable);
-        Log.d(TAG, String.valueOf(mRv == null));
+//        Log.d(TAG, String.valueOf(mRv == null));
     }
 }

@@ -16,13 +16,15 @@ public class PitchLineView extends View {
     private final String TAG = "PitchLineView:";
 
     // 线高
-    private int lineHeight = 25;
+    private int lineHeight = 10;
 
     // 画笔
     private Paint paint;
 
     // 音高线类对象
     private PitchLineData mData;
+
+    private final int padding = 0;
 
     public PitchLineView(Context context) {
         super(context);
@@ -80,7 +82,7 @@ public class PitchLineView extends View {
             return;
         // 加高度的一半是为了顶部的线不会出现只显示一半的情况
         int h = lineHeight / 2;
-        canvas.drawLine(0, h + mData.heightY, mData.lineLength, h + mData.heightY, paint);
+        canvas.drawLine(0, h + mData.heightY + padding, mData.lineLength, h + mData.heightY + padding, paint);
     }
 
     /**

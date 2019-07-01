@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".MainActivity">
 
     <!--<TextView
@@ -12,9 +12,5 @@
         android:layout_height="wrap_content"
         android:text="当前得分："/>
 -->
-    <com.example.pitchviewdemo.ScoreLineView
-        android:id="@+id/id_score_line_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

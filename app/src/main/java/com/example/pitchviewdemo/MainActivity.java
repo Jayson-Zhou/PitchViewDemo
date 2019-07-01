@@ -30,9 +30,12 @@ public class MainActivity extends AppCompatActivity {
     private long musicDuration = 100000;
 
     // 音高数据
-    private List<PitchLineData> dataList;
+    private List<PitchLineData> correctPitchDataList;
 
+    // 实际音高得分显示控件
     private ScoreLineView mScoreLineView;
+
+    private List<Integer> realPitchDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,44 +52,62 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         };
+
+        mScoreLineView = new ScoreLineView(this);
+        ll.addView(mScoreLineView);
+
         ll.addView(rv, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(manager);
-        dataList = new ArrayList<>();
+        correctPitchDataList = new ArrayList<>();
+        realPitchDataList = new ArrayList<>();
         initData();
-        adapter = new PitchRecyclerViewAdapter(this, dataList);
+        adapter = new PitchRecyclerViewAdapter(this);
+        adapter.setCorrectPitchData(correctPitchDataList);
+        /*adapter.setRealPitchData(realPitchDataList);*/
         rv.setAdapter(adapter);
         setContentView(ll);
         startScrollAnimat();
 
-        mScoreLineView = findViewById(R.id.id_score_line_view);
-
         // 模拟得分操作
-        mScoreLineView.setScore(200);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < realPitchDataList.size(); i ++) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    mScoreLineView.setScore(realPitchDataList.get(i));
+                }
+            }
+        }).start();
     }
 
     private void initData() {
-        if (dataList != null) {
+        if (correctPitchDataList != null) {
             // 插入模拟数据
             PitchLineData data1 = new PitchLineData();
             data1.lineLength = 1000;
             data1.needSing = false;
-            dataList.add(data1);
+            correctPitchDataList.add(data1);
             for (int i = 0; i < 30; i++) {
                 PitchLineData d = new PitchLineData();
                 d.heightY = i % 5 * 50;
                 d.lineLength = i * 50;
                 d.needSing = i % 4 != 0;
-                dataList.add(d);
+                correctPitchDataList.add(d);
+                realPitchDataList.add(d.heightY);
             }
             PitchLineData data2 = new PitchLineData();
             data2.lineLength = 1000;
             data2.needSing = false;
-            dataList.add(data2);
+            correctPitchDataList.add(data2);
 
             rvWidth = 0;
-            for (int i = 0; i < dataList.size(); i++) {
-                rvWidth += dataList.get(i).lineLength;
+            for (int i = 0; i < correctPitchDataList.size(); i++) {
+                rvWidth += correctPitchDataList.get(i).lineLength;
             }
         }
     }

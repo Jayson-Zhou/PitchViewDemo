@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -38,6 +39,12 @@ public class ScoreLineView extends View {
 
     // 移动的距离
     private int dY;
+
+    // 动画时间
+    private final int moveTime = 1000;
+
+    private int currentPosition = viewHeight - ballRadius;
+    private int destPosition;
 
     public ScoreLineView(Context context) {
         super(context);
@@ -79,35 +86,35 @@ public class ScoreLineView extends View {
         paint.setColor(ContextCompat.getColor(getContext(), R.color.ScoreLineColor));
         canvas.drawLine(viewWidth - ballRadius, 0, viewWidth - ballRadius, viewHeight, paint);
         paint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        canvas.drawCircle(viewWidth - ballRadius, viewHeight - ballRadius - dY, ballRadius, paint);
+        canvas.drawCircle(viewWidth - ballRadius, currentPosition, ballRadius, paint);
     }
 
     public void setScore(int score) {
+        destPosition = score;
         bAnimation = new BallAnimation(score);
         this.startAnimation(bAnimation);
     }
 
-    private class BallAnimation extends Animation {
+    public class BallAnimation extends Animation {
 
-        // 音高权值
-        private int weight;
-
-        public BallAnimation(int weight) {
-            this.weight = weight;
+        public BallAnimation(int height) {
+            destPosition = viewHeight - ballRadius - height;
         }
 
         @Override
         public void initialize(int width, int height, int parentWidth, int parentHeight) {
             super.initialize(width, height, parentWidth, parentHeight);
-            setDuration(1000);
+            setDuration(moveTime);
             setFillAfter(true);
-            setInterpolator(new LinearInterpolator());
+            //setInterpolator(new LinearInterpolator());
         }
 
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             super.applyTransformation(interpolatedTime, t);
-            dY = (int) (interpolatedTime * weight);
+            dY = (int) (interpolatedTime * (currentPosition - destPosition));
+            // 更新小球的位置坐标
+            currentPosition -= dY;
             postInvalidate();
         }
     }
