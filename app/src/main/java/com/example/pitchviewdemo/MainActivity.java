@@ -5,13 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +32,12 @@ public class MainActivity extends AppCompatActivity {
     // 音高数据
     private List<PitchLineData> dataList;
 
+    private ScoreLineView mScoreLineView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
 
-        /*PitchLineView test = findViewById(R.id.test);
-        PitchLineData data = new PitchLineData();
-        data.heightY = 10;
-        data.lineLength = 100;
-        data.needSing = true;
-        test.setData(data);*/
         initViewAndData();
     }
 
@@ -60,10 +51,6 @@ public class MainActivity extends AppCompatActivity {
         };
         ll.addView(rv, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        LinearLayout.LayoutParams rvParams = (LinearLayout.LayoutParams) rv.getLayoutParams();
-        rvParams.gravity = Gravity.CENTER;
-        Log.d(TAG, String.valueOf((rvParams.gravity == Gravity.CENTER)));
-        rv.setLayoutParams(rvParams);
         rv.setLayoutManager(manager);
         dataList = new ArrayList<>();
         initData();
@@ -71,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
         setContentView(ll);
         startScrollAnimat();
+
+        mScoreLineView = findViewById(R.id.id_score_line_view);
+
+        // 模拟得分操作
+        mScoreLineView.setScore(200);
     }
 
     private void initData() {
@@ -93,11 +85,9 @@ public class MainActivity extends AppCompatActivity {
             dataList.add(data2);
 
             rvWidth = 0;
-            for (int i = 0; i < dataList.size(); i ++) {
+            for (int i = 0; i < dataList.size(); i++) {
                 rvWidth += dataList.get(i).lineLength;
-//                Log.d(TAG, String.valueOf(rvWidth));
             }
-//            Log.d(TAG, "初始化模拟数据");
         }
     }
 

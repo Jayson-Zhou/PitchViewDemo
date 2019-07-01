@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="PitchLineColor">#33334c</color>
+    <color name="ScoreLineColor">#000000</color>
+    <color name="ScoreBallColor">#1affd1</color>
 </resources>

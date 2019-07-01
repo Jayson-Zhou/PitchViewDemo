@@ -12,5 +12,9 @@
         android:layout_height="wrap_content"
         android:text="当前得分："/>
 -->
+    <com.example.pitchviewdemo.ScoreLineView
+        android:id="@+id/id_score_line_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

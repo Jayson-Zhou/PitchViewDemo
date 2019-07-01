@@ -33,7 +33,6 @@ public class ScrollAnimat {
         @Override
         public void run() {
 
-//            Log.d(TAG, "进入run");
             if (!mRv.canScrollHorizontally(1)) {
                 Log.d(TAG, "滑动结束");
                 return;
@@ -45,7 +44,6 @@ public class ScrollAnimat {
             mRv.scrollBy(currentLength - scrolledLength, 0);
             scrolledLength = currentLength;
             ViewCompat.postOnAnimation(mRv, this);
-//            Log.d(TAG, "滑动中");
         }
     };
 

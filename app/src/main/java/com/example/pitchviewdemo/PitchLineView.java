@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -46,8 +45,10 @@ public class PitchLineView extends View {
         initData();
     }
 
+    /**
+     * 初始化画笔，设置画笔属性线高等
+     */
     private void initData() {
-        // 设置画笔属性线高等
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeWidth(lineHeight);
@@ -62,11 +63,11 @@ public class PitchLineView extends View {
         int widthSpec, heightSpec;
         if (mData != null && mData.lineLength > 0) {
             widthSpec = MeasureSpec.makeMeasureSpec(mData.lineLength, MeasureSpec.EXACTLY);
-            // 高度的值取决于音高线的音高量化分度值
+            // 高度的值取决于音高线的音高量化分度最大值
             heightSpec = MeasureSpec.makeMeasureSpec(250, MeasureSpec.EXACTLY);
         } else {
             widthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
-            // 高度的值取决于音高线的音高量化分度值
+            // 高度的值取决于音高线的音高量化分度最大值
             heightSpec = MeasureSpec.makeMeasureSpec(250, MeasureSpec.EXACTLY);
         }
         super.onMeasure(widthSpec, heightSpec);
