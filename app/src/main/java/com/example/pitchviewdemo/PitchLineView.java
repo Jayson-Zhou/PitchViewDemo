@@ -92,7 +92,8 @@ public class PitchLineView extends View {
      */
     public void setData(PitchLineData data) {
         mData = data;
-        invalidate();
-    }
 
+        // 使用PitchLineScrollLayout的时候不需要invalidate
+        //invalidate();
+    }
 }

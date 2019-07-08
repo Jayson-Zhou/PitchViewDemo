@@ -32,7 +32,6 @@ public class ScrollAnimat {
     private Runnable scrollRunnable = new Runnable() {
         @Override
         public void run() {
-
             if (!mRv.canScrollHorizontally(1)) {
                 Log.d(TAG, "滑动结束");
                 return;

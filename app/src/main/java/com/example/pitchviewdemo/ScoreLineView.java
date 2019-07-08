@@ -41,7 +41,7 @@ public class ScoreLineView extends View {
     private int dY;
 
     // 动画时间
-    private final int moveTime = 1000;
+    private final int moveTime = 5;
 
     private int currentPosition = viewHeight - ballRadius;
     private int destPosition;
